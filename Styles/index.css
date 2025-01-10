@@ -1,0 +1,54 @@
+*{
+    font-family: "DM Mono", monospace;
+    background-color: #121212;
+    color: white;
+    image-rendering: pixelated;
+}
+
+fieldset{
+
+    border: solid 2px #535353;
+    transition: 0.3s;
+}fieldset:hover{border: solid 2px #1ed760;}
+
+a{
+    font-size: 18px;
+}
+
+ul{
+    list-style-type: square;
+    padding-inline-start: 50px;
+}
+
+footer{
+    margin-left: 200px;
+    margin-right: 200px;
+
+}
+
+.main{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 15px;
+    margin-left: 200px;
+    margin-right: 200px;
+    min-width: 560px;
+}
+
+.sidebar-left{
+    min-width: 200px;
+    h2{
+        text-align: center;
+    }
+}
+
+.recent-blogs,.profile-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.welcome-text, .all-blogs, .about-text, .projects-text, .blog-content{
+    margin: 20px;
+}
