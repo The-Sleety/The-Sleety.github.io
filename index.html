@@ -1,77 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="./Styles/index.css">
-        <title>Sleety's Attic</title>
-    </head>
-
-    <body>
-        <div class="main">
-            <div class="sidebar-left">
-
-                <fieldset>
-                    <legend>YEahhhh</legend>
-                    <div class="profile-container">
-                        <img src="./Images/Misc/pfp.png" alt="">
-                    </div>
-                    <h2>Navigation</h2>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="./Pages/Blog.html">Blog</a></li>
-                        <li><a href="./Pages/AboutMe.html">About Me</a></li>
-                        <li><a href="./Pages/Projects.html">Projects</a></li>
-                    </ul>
-                </fieldset>
-
-                <br>
-                <br>
-
-                <fieldset>
-                    <legend>Where to find me</legend>
-                    <h2>Links</h2>
-                    <ul>
-                        <li><a href="https://www.youtube.com/@SleetyDev">Youtube</a></li>
-                        <li><a href="https://www.instagram.com/sleetydev/">Instagram</a></li>
-                        <li><a href="https://x.com/TheSleety">Twitter</a></li>
-                        <li><a href="https://thesleety.itch.io">Itch.io</a></li>
-                        <li><a href="https://github.com/The-Sleety">Github</a></li>
-                    </ul>
-                </fieldset>
-
-                <br>
-
-            </div>
-
-            <div class="content">
-                <fieldset>
-                    <legend>Main Content</legend>
-                    <div class="welcome-text">
-                        <h1>Hello...</h1>
-                        <p>I'm a 14 year old game/frontend/backend developer and music enjoyer from Turkiye. I love programming and messing with tech. If you wanna learn more about me <a href="./Pages/AboutMe.html">click here</a>. </p>
-                        <br>
-                        <p style="font-weight: bold;">What is this website about?</p>
-                        <p>This website is nothing special, it's something that i've done in my free time to be able to write blogs and just have fun, but just you know i'll be using this site, unline others...</p>
-                    </div>
-                    <br>
-                    <div class="recent-blogs">
-                        <fieldset style="width: 500px; min-height: 130px;">
-                            <legend>recent-blogs</legend>
-                            <ul>
-                                <li><a href="./Pages/BlogEntries/i-am-back.html">Hello (again), World - July 7th 2025</a></li>
-                                <li><a href="./Pages/BlogEntries/the-start.html">The Start - January 10th 2025</a></li>
-                            </ul>
-                        </fieldset>
-                    </div>
-                </fieldset>
-            </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./index.css">
+    <title>Sleety's Attic</title>
+</head>
+<body>
+    <div class="monitor-frame">
+        <div class="magi-header">
+            <div class="status-box alert-bg">PRIORITY: AAA</div>
+            <div class="title-box">SLEETY'S ATTIC - MAGI</div>
+            <div class="code-box">EXT_VER: 21.0</div>
         </div>
-    </body>
-    <footer>
-        <fieldset>
-            <legend>Footer</legend>
-            <p style="text-align: center;">&copy; SleetyDev 2025</p>
-        </fieldset>
-    </footer>
+
+        <div class="warning-strip">
+            
+            <span class="separator">||</span>
+            
+            <span class="separator">||</span>
+        </div>
+
+        <div class="main-wrapper">
+
+            <aside class="magi-sidebar">
+                <fieldset class="core-box melchior">
+                    <legend>MELCHIOR-1</legend>
+                    <div class="pfp-container">
+                        <img src="./Images/Misc/pfp.png" alt="PFP" class="pixel-pfp" id="magi-pfp">
+                    </div>
+                    <nav>
+                        <ul>
+                            <li><a href="index.html" class="nav-link">01_HOME</a></li>
+                            <li><a href="./blog.html" class="nav-link">02_LOGS</a></li>
+                            <li><a href="./aboutme.html" class="nav-link">03_BIO</a></li>
+                            <li><a href="./projects.html" class="nav-link">04_PROJECTS</a></li>
+                        </ul>
+                    </nav>
+                </fieldset>
+
+                <fieldset class="core-box balthasar">
+                    <legend>BALTHASAR-2</legend>
+                    <ul class="link-grid">
+                        <li><a href="https://github.com/The-Sleety" class="link-item">GITHUB_EXT</a></li>
+                        <li><a href="https://thesleety.itch.io" class="link-item">ITCH_SRV</a></li>
+                        <li><a href="https://x.com/TheSleety" class="link-item">TWITTER_COM</a></li>
+                        <li><a href="https://www.youtube.com/@SleetyDev" class="link-item">_CHANNEL</a></li>
+                    </ul>
+                </fieldset>
+            </aside>
+
+            <main class="magi-content">
+                <fieldset class="terminal-frame caspar">
+                    <legend>CASPAR-3: MAIN_LOGIC</legend>
+                    
+                    <section class="intro">
+                        <h1 class="glow-text">> HOME_PAGE</h1>
+                        <p class="data-text">I'm a <span class="accent-yellow">15-year-old</span> game/frontend/backend developer and music enjoyer from Turkiye. I love programming and messing with tech.</p>
+                        <p class="data-text"><span class="accent-blue">What is this website about?</span></p>
+                        <p class="data-text">This website is nothing special, it's something that i've done in my free time to be able to write blogs and just have fun, but just you know i'll be using this site, unline others i've made...</p>
+                        
+                        <!--<p class="data-text">System focus: <span class="accent-blue">Game/Frontend/Backend</span> & Music enjoyer.</p>-->
+                    </section>
+
+                    <div class="honeycomb-divider"></div>
+
+                    <fieldset class="sub-log">
+                        <legend>RECENT_ENTRIES</legend>
+                        <ul class="blog-list">
+                            <li><span class="timestamp">[2025.07.07]</span> <a href="./Pages/BlogEntries/i-am-back.html" class="blog-link">HELLO_AGAIN_WORLD.TXT</a></li>
+                            <li><span class="timestamp">[2025.01.10]</span> <a href="./Pages/BlogEntries/the-start.html" class="blog-link">INITIAL_BOOT_SEQUENCE.TXT</a></li>
+                        </ul>
+                    </fieldset>
+                </fieldset>
+            </main>
+        </div>
+
+        <footer class="magi-footer">
+            <fieldset>
+                <div class="footer-inner">
+                    <span class="accent-blue">NERV_S04_OS</span>
+                    <span class="accent-yellow">COPYRIGHT_SLEETYDEV_2026</span>
+                </div>
+            </fieldset>
+        </footer>
+    </div>
+</body>
+<script>
+    async function loadRecentMagiLogs() {
+        const listElement = document.querySelector('.blog-list')
+        try {
+            const response = await fetch('./blogs.json');
+            const logs = await response.json();
+            
+            // Show the top 2 newest logs
+            const recent = logs.slice(0, 5); 
+            
+            listElement.innerHTML = recent.map(log => `
+                <li>
+                    <span class="timestamp">[${log.date}]</span> 
+                    <a href="./blogdisplay.html?id=${log.id}" class="blog-link">${log.title}.TXT</a>
+                </li>
+            `).join('');
+        } catch (e) {
+            listElement.innerHTML = "<li>SYNC_ERROR</li>";
+        }
+    }
+    loadRecentMagiLogs();
+    const pfpImages = [
+        "./Images/Misc/rei-I-removebg-preview.png",
+        "./Images/Misc/asuka-removebg-preview.png"
+    ];
+    const pfpElement = document.getElementById('magi-pfp');
+
+    const chance = Math.random();
+
+    if (chance < 0.7) { 
+        pfpElement.src = "./Images/Misc/pfp.png";
+    } else {
+        const randomIndex = Math.floor(Math.random() * pfpImages.length);
+        pfpElement.src = pfpImages[randomIndex];
+    }
+
+    if (!sessionStorage.getItem('magi_booted')) {
+        sessionStorage.setItem('magi_booted', 'true');
+        window.location.href = "intro.html";
+    }
+</script>
 </html>

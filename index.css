@@ -1,0 +1,151 @@
+:root {
+    --magi-orange: #ff9d00;
+    --magi-red: #ff3c00;
+    --magi-yellow: #ffcc00;
+    --magi-blue: #00e5ff;
+    --magi-bg: #0a0805;
+    --magi-dark-orange: #4b2e00;
+}
+
+* {
+    background-color: transparent;
+    color: var(--magi-orange);
+    font-family: "Courier New", Courier, monospace;
+    text-transform: uppercase;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--magi-bg);
+    /* Subtle honeycomb effect */
+    background-image: radial-gradient(var(--magi-dark-orange) 1px, transparent 0);
+    background-size: 20px 20px;
+    margin: 0;
+    padding: 0;
+}
+
+.monitor-frame {
+    margin: 40px 200px;
+    border: 3px solid var(--magi-orange);
+    background-color: rgba(10, 8, 5, 0.95);
+    padding: 20px;
+    min-height: calc(100vh - 80px);
+    box-shadow: inset 0 0 50px rgba(255, 157, 0, 0.1);
+}
+
+/* Header & Warning Strip */
+.magi-header {
+    display: flex;
+    justify-content: space-between;
+    background: var(--magi-orange);
+    margin-bottom: 5px;
+    padding: 4px;
+}
+
+.magi-header * { color: black; font-weight: 900; }
+
+.alert-bg { background: var(--magi-red); color: white !important; padding: 0 10px; }
+
+.warning-strip {
+    background: #221500;
+    border: 1px solid var(--magi-orange);
+    color: var(--magi-yellow);
+    font-size: 11px;
+    padding: 3px 10px;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+/* Sidebar & Cores */
+.main-wrapper { display: flex; gap: 20px; }
+.magi-sidebar { width: 250px; flex-shrink: 0; }
+.magi-content { flex-grow: 1; }
+
+.melchior { border-color: var(--magi-orange); }
+.balthasar { border-color: var(--magi-blue); }
+.balthasar legend { background: var(--magi-blue); }
+.caspar { border-color: var(--magi-yellow); }
+.caspar legend { background: var(--magi-yellow); }
+
+fieldset {
+    border: 2px solid var(--magi-orange);
+    margin-bottom: 20px;
+    padding: 15px;
+    background: rgba(255, 157, 0, 0.02);
+}
+
+legend {
+    background: var(--magi-orange);
+    color: black;
+    padding: 0 10px;
+    font-weight: bold;
+}
+
+/* Profile Picture */
+.pfp-container {
+    width: 100%;
+    margin-bottom: 15px;
+    border: 2px solid var(--magi-orange);
+}
+
+.pixel-pfp {
+    width: 100%;
+    display: block;
+    
+    /* Removes the orange tint while keeping it sharp */
+    image-rendering: pixelated; 
+    image-rendering: crisp-edges;
+    
+    /* Boosts contrast to make pixels stand out more */
+    filter: contrast(150%) brightness(110%);
+    
+    /* Optional: If the image is too detailed, this 'blurs' then 'sharpens' 
+       to simulate a lower resolution, though it works best on larger images */
+    /* filter: blur(1px) contrast(200%); */
+}
+
+/* Links & Text */
+a { text-decoration: none; transition: 0.2s; }
+.nav-link { color: var(--magi-orange); display: block; padding: 5px; border-bottom: 1px solid #332200; }
+.nav-link:hover { background: var(--magi-orange); color: black; }
+
+.link-item { color: var(--magi-blue); }
+.link-item:hover { color: white; text-shadow: 0 0 8px var(--magi-blue); }
+
+.blog-link { color: var(--magi-yellow); }
+.blog-link:hover { background: var(--magi-yellow); color: black; }
+
+.accent-yellow { color: var(--magi-yellow); }
+.accent-blue { color: var(--magi-blue); }
+.timestamp { color: #666; font-size: 0.9em; margin-right: 10px; }
+
+/* Decorative */
+.honeycomb-divider {
+    height: 10px;
+    background: repeating-linear-gradient(45deg, var(--magi-orange), var(--magi-orange) 2px, transparent 2px, transparent 10px);
+    margin: 20px 0;
+    opacity: 0.3;
+}
+
+
+.blink-red {
+    color: var(--magi-red);
+    animation: blink 1s steps(2, start) infinite;
+}
+
+@keyframes blink { to { visibility: hidden; } }
+
+/* Footer */
+.magi-footer fieldset { border-style: dashed; border-color: #444; }
+.footer-inner { display: flex; justify-content: space-between; font-size: 13px; }
+
+/* Desktop-only Margins */
+@media (max-width: 1200px) {
+    .monitor-frame { margin: 20px 50px; }
+}
+@media (max-width: 768px) {
+    .monitor-frame { margin: 10px; }
+    .main-wrapper { flex-direction: column; }
+}

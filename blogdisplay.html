@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../index.css">
+    <title>Blog</title>
+</head>
+<body>
+    <div class="monitor-frame">
+        <div class="magi-header">
+            <div class="status-box alert-bg">PRIORITY: AAA</div>
+            <div class="title-box" id="post-title-header">RETRIEVING_DATA...</div>
+            <div class="code-box">EXT_VER: 21.0</div>
+        </div>
+
+        <div class="main-wrapper">
+            <aside class="magi-sidebar">
+                <fieldset class="core-box melchior">
+                    <legend>MELCHIOR-1</legend>
+                    <div class="pfp-container"><img src="../Images/Misc/pfp.png" class="pixel-pfp" id="magi-pfp"></div>
+                    <nav>
+                        <ul>
+                            <li><a href="../index.html" class="nav-link">01_HOME</a></li>
+                            <li><a href="./Blog.html" class="nav-link">02_LOGS</a></li>
+                            <li><a href="./AboutMe.html" class="nav-link">03_BIO</a></li>
+                            <li><a href="./Projects.html" class="nav-link">04_PROJECTS</a></li>
+                        </ul>
+                    </nav>
+                </fieldset>
+            </aside>
+
+            <main class="magi-content">
+                <fieldset class="terminal-frame caspar">
+                    <legend id="post-id-legend">CASPAR-3: LOG_VIEWER</legend>
+                    
+                    <h1 class="glow-text" id="post-title">> LOADING...</h1>
+                    <p class="timestamp" id="post-date">[0000.00.00]</p>
+                    
+                    <div class="honeycomb-divider"></div>
+
+                    <div id="post-body" class="data-text">
+                        SYNCING_WITH_DATABASE...
+                    </div>
+
+                    <div id="post-media" style="margin-top: 20px;">
+                        <!-- Media (Videos/Images) inject here -->
+                    </div>
+
+                    <div class="honeycomb-divider"></div>
+                    <a href="./Blog.html" class="blog-link"><< RETURN_TO_ARCHIVE</a>
+                </fieldset>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        async function loadEntry() {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+            
+            try {
+                const response = await fetch('../blogs.json');
+                const logs = await response.json();
+                const post = logs.find(l => l.id === id);
+
+                if (post) {
+                    document.title = `MAGI | ${post.title}`;
+                    document.getElementById('post-title-header').innerText = `LOG: ${post.title}`;
+                    document.getElementById('post-title').innerText = `> ${post.title}`;
+                    document.getElementById('post-date').innerText = `[${post.date}]`;
+                    document.getElementById('post-body').innerHTML = post.content;
+                    document.getElementById('post-media').innerHTML = post.media;
+                    document.getElementById('post-id-legend').innerText = `CASPAR-3: LOG_${post.id}`;
+                } else {
+                    document.getElementById('post-body').innerText = "ERROR: LOG_NOT_FOUND";
+                }
+            } catch (e) {
+                document.getElementById('post-body').innerText = "ERROR: DATABASE_CONNECTION_FAILED";
+            }
+        }
+        loadEntry();
+
+        // PFP Randomizer
+        const pfpImages = ["../Images/Misc/rei-I-removebg-preview.png", "../Images/Misc/asuka-removebg-preview.png"];
+        const pfpElement = document.getElementById('magi-pfp');
+        if (Math.random() > 0.7) pfpElement.src = pfpImages[Math.floor(Math.random() * pfpImages.length)];
+    </script>
+</body>
+</html>

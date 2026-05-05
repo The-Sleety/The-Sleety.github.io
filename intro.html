@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sleety's Attic</title>
+    <style>
+        :root {
+            --magi-orange: #ff9d00;
+            --magi-red: #ff3c00;
+            --magi-yellow: #ffcc00;
+            --magi-blue: #00e5ff;
+            --magi-bg: #0a0805;
+            --glow: 0 0 8px rgba(255, 157, 0, 0.6);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: transparent;
+        }
+
+        body {
+            background-color: var(--magi-bg);
+            color: var(--magi-orange);
+            font-family: "Courier New", Courier, monospace;
+            text-transform: uppercase;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            text-shadow: var(--glow);
+        }
+
+        #console {
+            flex-grow: 1;
+            font-size: 13px; 
+            line-height: 1.4;
+            padding: 30px; 
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end; 
+        }
+
+        .line { 
+            white-space: pre-wrap; 
+            margin-bottom: 2px;
+            letter-spacing: 1px;
+        }
+
+        .ok { color: var(--magi-blue); text-shadow: 0 0 5px var(--magi-blue); }
+        .warn { color: var(--magi-red); text-shadow: 0 0 5px var(--magi-red); }
+        .info { color: var(--magi-yellow); }
+
+        .overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(
+                rgba(18, 16, 16, 0) 50%, 
+                rgba(0, 0, 0, 0.15) 50%
+            );
+            background-size: 100% 3px;
+            z-index: 100;
+            pointer-events: none;
+        }
+
+        @keyframes flicker {
+            0% { opacity: 0.98; }
+            100% { opacity: 1; }
+        }
+        body { animation: flicker 0.1s infinite; }
+
+    </style>
+</head>
+<body>
+    <div class="overlay"></div>
+    <div id="console"></div>
+
+    <script>
+        const consoleEl = document.getElementById('console');
+        const devices = ["sda", "sdb", "nvme0n1", "usb1", "pci0000:00", "cpu0", "eth0"];
+        const services = ["NetworkManager", "D-Bus", "Udev", "Magi-Kernel", "Gehirn-Link", "Soul-Buffer", "Lilith-Driver"];
+
+        function generateArchLogs() {
+            let logPool = [
+                ":: INITIALIZING RAMDISK...",
+                ":: LOADING HOOKS [BASE UDEV AUTODETECT MODCONF BLOCK FILESYSTEMS KEYBOARD FSCK]",
+                "--------------------------------------------------"
+            ];
+
+            for (let i = 0; i < 120; i++) {
+                const rand = Math.random();
+                if (rand > 0.8) {
+                    logPool.push(`[ <span class="ok">OK</span> ] STARTED ${services[Math.floor(Math.random() * services.length)]} SERVICE.`);
+                } else if (rand > 0.5) {
+                    logPool.push(`DEVICE /DEV/${devices[Math.floor(Math.random() * devices.length)]} INITIALIZED: IRQ ${Math.floor(Math.random() * 50)}.`);
+                } else {
+                    logPool.push(`PCI ${Math.floor(Math.random() * 999)}:00:1F.3: NERV CORP DEVICE ${Math.floor(Math.random() * 8000)}`);
+                }
+            }
+
+            logPool.push("--------------------------------------------------");
+            logPool.push(":: DETECTING MAGI CORES...");
+            logPool.push("[ <span class='ok'>OK</span> ] MELCHIOR-1 STRATOS CONNECTED");
+            logPool.push("[ <span class='ok'>OK</span> ] BALTHASAR-2 STRATOS CONNECTED");
+            logPool.push("[ <span class='ok'>OK</span> ] CASPAR-3 STRATOS CONNECTED");
+            logPool.push(":: SYNCHRONIZING SOUL-LINKAGE...");
+            logPool.push("[ <span class='warn'>WARN</span> ] SYNC RATIO: 99.1% - PROCEEDING REGARDLESS");
+            logPool.push("WELCOME TO MAGI v4.1 (TTY1)");
+            logPool.push("LOGIN: AUTOMATIC (USER_01)");
+
+            return logPool;
+        }
+
+        const allLogs = generateArchLogs();
+
+        function addLine(index) {
+            if (index < allLogs.length) {
+                const div = document.createElement('div');
+                div.className = 'line';
+                div.innerHTML = allLogs[index];
+                consoleEl.appendChild(div);
+
+                let speed = index < 110 ? Math.random() * 10 : 350;
+
+                if (consoleEl.childNodes.length > 40) {
+                    consoleEl.removeChild(consoleEl.firstChild);
+                }
+
+                setTimeout(() => addLine(index + 1), speed);
+            } else {
+                setTimeout(() => {
+                    window.location.href = "index.html";
+                }, 1500);
+            }
+        }
+
+        window.onload = () => setTimeout(() => addLine(0), 500);
+    </script>
+</body>
+</html>
