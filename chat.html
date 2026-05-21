@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./index.css">
+    <title>Sleety's Attic</title>
+    <script src="https://iframe.chat/scripts/main.min.js"></script>
+</head>
+<body>
+    
+    <div class="monitor-frame">
+        <div class="magi-header">
+            <div class="status-box alert-bg">PRIORITY: AAA</div>
+            <div class="title-box">SLEETY'S ATTIC - MAGI</div>
+            <div class="code-box">EXT_VER: 21.0</div>
+        </div>
+
+        <div class="warning-strip">
+            
+            <span class="separator">||</span>
+            
+            <span class="separator">||</span>
+        </div>
+
+        <div class="main-wrapper">
+
+            <aside class="magi-sidebar">
+                <fieldset class="core-box melchior">
+                    <legend>MELCHIOR-1</legend>
+                    <div class="pfp-container">
+                        <img src="./Images/Misc/pfp.png" alt="PFP" class="pixel-pfp" id="magi-pfp">
+                    </div>
+                    <nav>
+                        <ul>
+                            <li><a href="index.html" class="nav-link">01_HOME</a></li>
+                            <li><a href="./blog.html" class="nav-link">02_LOGS</a></li>
+                            <li><a href="./aboutme.html" class="nav-link">03_BIO</a></li>
+                            <li><a href="./projects.html" class="nav-link">04_PROJECTS</a></li>
+                            <li><a href="./chat.html" class="nav-link">05_COMM</a></li>
+                        </ul>
+                    </nav>
+                </fieldset>
+
+                <fieldset class="core-box balthasar">
+                    <legend>BALTHASAR-2</legend>
+                    <ul class="link-grid">
+                        <li><a href="https://github.com/The-Sleety" class="link-item">GITHUB_EXT</a></li>
+                        <li><a href="https://thesleety.itch.io" class="link-item">ITCH_SRV</a></li>
+                        <li><a href="https://x.com/TheSleety" class="link-item">TWITTER_COM</a></li>
+                        <li><a href="https://www.youtube.com/@SleetyDev" class="link-item">_CHANNEL</a></li>
+                    </ul>
+                </fieldset>
+            </aside>
+
+            <main class="magi-content">
+                <fieldset class="terminal-frame caspar">
+                    <legend>CASPAR-3: COMMUNICATION_INTERFACE</legend>
+                    
+                    <div class="chat-header">
+                        <span class="user-label">USER: [GUEST_ACCESS]</span>
+                        <span class="status-label">STATUS: CONNECTED</span>
+                    </div>
+
+                    <div class="chat-wrapper">
+                        <iframe src="https://iframe.chat/embed?chat=13965880" id="chattable"></iframe>
+                    </div>
+                </fieldset>
+        </div>
+
+        <footer class="magi-footer">
+            <fieldset>
+                <div class="footer-inner">
+                    <span class="accent-blue">NERV_S04_OS</span>
+                    <span class="accent-yellow">COPYRIGHT_SLEETYDEV_2026</span>
+                </div>
+            </fieldset>
+        </footer>
+    </div>
+</body>
+<script>
+    chattable.initialize({
+        stylesheet: "index.css"
+    });
+</script>
+<script>
+    async function loadRecentMagiLogs() {
+        const listElement = document.querySelector('.blog-list')
+        try {
+            const response = await fetch('./blogs.json');
+            const logs = await response.json();
+            
+            // Show the top 2 newest logs
+            const recent = logs.slice(0, 5); 
+            
+            listElement.innerHTML = recent.map(log => `
+                <li>
+                    <span class="timestamp">[${log.date}]</span> 
+                    <a href="./blogdisplay.html?id=${log.id}" class="blog-link">${log.title}.TXT</a>
+                </li>
+            `).join('');
+        } catch (e) {
+            listElement.innerHTML = "<li>SYNC_ERROR</li>";
+        }
+    }
+    loadRecentMagiLogs();
+    const pfpImages = [
+        "./Images/Misc/rei-I-removebg-preview.png",
+        "./Images/Misc/asuka-removebg-preview.png"
+    ];
+    const pfpElement = document.getElementById('magi-pfp');
+
+    const chance = Math.random();
+
+    if (chance < 0.7) { 
+        pfpElement.src = "./Images/Misc/pfp.png";
+    } else {
+        const randomIndex = Math.floor(Math.random() * pfpImages.length);
+        pfpElement.src = pfpImages[randomIndex];
+    }
+
+    if (!sessionStorage.getItem('magi_booted')) {
+        sessionStorage.setItem('magi_booted', 'true');
+        window.location.href = "intro.html";
+    }
+</script>
+</html>
