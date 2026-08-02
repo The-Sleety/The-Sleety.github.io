@@ -30,8 +30,11 @@ body {
     margin: 0;
     padding: 0;
 }
+aside{
+    max-width: 250px;
+}
 .waveform-box {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     bottom: 0;
@@ -41,15 +44,15 @@ body {
     margin: 0;
     margin-left: 40px;
     box-sizing: border-box; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-aside{
-    max-width: 250px;
-}
 #magiWaveform {
     width: 100%;
     height: 100%;
-    background-color: transparent;
+    display: block;
 }
 .monitor-frame {
     margin: 40px 200px;
