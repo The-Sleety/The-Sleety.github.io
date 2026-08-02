@@ -1,10 +1,15 @@
 :root {
-    --magi-orange: #ff9d00;
-    --magi-red: #ff3c00;
-    --magi-yellow: #ffcc00;
-    --magi-blue: #00e5ff;
-    --magi-bg: #0a0805;
+    --magi-orange: #ec7420;
+    --magi-red: #f02020;
+    --magi-yellow: #f4b000;
+    /*for some fucking reason blue and cyan is reversed*/
+    --magi-cyan: #3cffd0;
+    --magi-blue:#40c8e8;
+    --magi-magenta: #b040a0;
+    --magi-bg: #000000;
     --magi-dark-orange: #4b2e00;
+    --magi-green: #50ff10;
+    --magi-white: #b0b0b0;
 }
 
 * {
@@ -14,26 +19,47 @@
     text-transform: uppercase;
     box-sizing: border-box;
 }
-
 body {
+    --bg-x: 0px;
+    --bg-y: 0px;
+    
     background-color: var(--magi-bg);
-    /* Subtle honeycomb effect */
     background-image: radial-gradient(var(--magi-dark-orange) 1px, transparent 0);
     background-size: 20px 20px;
+    background-position: var(--bg-x) var(--bg-y);
     margin: 0;
     padding: 0;
 }
+.waveform-box {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 80px;
+    height: 100vh;
+    z-index: 99;
+    margin: 0;
+    margin-left: 40px;
+    box-sizing: border-box; 
+}
 
+aside{
+    max-width: 250px;
+}
+#magiWaveform {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+}
 .monitor-frame {
     margin: 40px 200px;
     border: 3px solid var(--magi-orange);
-    background-color: rgba(10, 8, 5, 0.95);
+    background-color: var(--magi-bg);
     padding: 20px;
     min-height: calc(100vh - 80px);
     box-shadow: inset 0 0 50px rgba(255, 157, 0, 0.1);
 }
 
-/* Header & Warning Strip */
 .magi-header {
     display: flex;
     justify-content: space-between;
@@ -58,7 +84,6 @@ body {
     gap: 15px;
 }
 
-/* Sidebar & Cores */
 .main-wrapper { display: flex; gap: 20px; }
 .magi-sidebar { width: 250px; flex-shrink: 0; }
 .magi-content { flex-grow: 1; }
@@ -83,7 +108,6 @@ legend {
     font-weight: bold;
 }
 
-/* Profile Picture */
 .pfp-container {
     width: 100%;
     margin-bottom: 15px;
@@ -94,19 +118,14 @@ legend {
     width: 100%;
     display: block;
     
-    /* Removes the orange tint while keeping it sharp */
     image-rendering: pixelated; 
     image-rendering: crisp-edges;
     
-    /* Boosts contrast to make pixels stand out more */
     filter: contrast(150%) brightness(110%);
     
-    /* Optional: If the image is too detailed, this 'blurs' then 'sharpens' 
-       to simulate a lower resolution, though it works best on larger images */
-    /* filter: blur(1px) contrast(200%); */
+
 }
 
-/* Links & Text */
 a { text-decoration: none; transition: 0.2s; }
 .nav-link { color: var(--magi-orange); display: block; padding: 5px; border-bottom: 1px solid #332200; }
 .nav-link:hover { background: var(--magi-orange); color: black; }
@@ -121,7 +140,6 @@ a { text-decoration: none; transition: 0.2s; }
 .accent-blue { color: var(--magi-blue); }
 .timestamp { color: #666; font-size: 0.9em; margin-right: 10px; }
 
-/* Decorative */
 .honeycomb-divider {
     height: 10px;
     background: repeating-linear-gradient(45deg, var(--magi-orange), var(--magi-orange) 2px, transparent 2px, transparent 10px);
@@ -137,11 +155,9 @@ a { text-decoration: none; transition: 0.2s; }
 
 @keyframes blink { to { visibility: hidden; } }
 
-/* Footer */
 .magi-footer fieldset { border-style: dashed; border-color: #444; }
 .footer-inner { display: flex; justify-content: space-between; font-size: 13px; }
 
-/* Desktop-only Margins */
 @media (max-width: 1200px) {
     .monitor-frame { margin: 20px 50px; }
 }
@@ -150,17 +166,15 @@ a { text-decoration: none; transition: 0.2s; }
     .main-wrapper { flex-direction: column; }
 }
 
-/* Container to force 100% width and height */
 .chat-container {
     width: 100%;
-    height: 500px; /* Adjust height as needed */
+    height: 500px;
     border: 1px solid var(--magi-yellow);
     background: rgba(0, 0, 0, 0.3);
     margin-bottom: 10px;
     padding: 2px;
 }
 
-/* Force the iframe to fill the container */
 #chattable {
     width: 100%;
     height: 100%;
@@ -172,7 +186,6 @@ a { text-decoration: none; transition: 0.2s; }
 ::-moz-placeholder { color: #0a0805 !important; }
 :-ms-input-placeholder { color: #0a0805 !important; }
 
-/* Optional: Add a "Username" label above the chat if you want it visible */
 .chat-container::before {
     content: "USER_IDENTIFICATION: [GUEST_ACCESS]";
     display: block;

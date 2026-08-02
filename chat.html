@@ -8,7 +8,9 @@
     <script src="https://iframe.chat/scripts/main.min.js"></script>
 </head>
 <body>
-    
+    <div class="waveform-box">
+        <canvas id="magiWaveform" width="200"></canvas>
+    </div>
     <div class="monitor-frame">
         <div class="magi-header">
             <div class="status-box alert-bg">PRIORITY: AAA</div>
@@ -41,7 +43,15 @@
                         </ul>
                     </nav>
                 </fieldset>
-
+                <fieldset class="core-box caspar" id="lastfm-widget">
+                    <legend>AUDIO_FEED</legend>
+                    <div class="lastfm-inner">
+                        <div id="lastfm-topartist" class="accent-blue">Top Artist: </div>
+                        <div id="lastfm-status" class="timestamp">[FETCHING]</div>
+                        <div id="lastfm-title" class="glow-text">LOADING_TRACK...</div>
+                        <div id="lastfm-artist" class="accent-blue">---</div>
+                    </div>
+                </fieldset>
                 <fieldset class="core-box balthasar">
                     <legend>BALTHASAR-2</legend>
                     <ul class="link-grid">
@@ -90,7 +100,6 @@
             const response = await fetch('./blogs.json');
             const logs = await response.json();
             
-            // Show the top 2 newest logs
             const recent = logs.slice(0, 5); 
             
             listElement.innerHTML = recent.map(log => `

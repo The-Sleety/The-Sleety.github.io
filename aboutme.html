@@ -7,15 +7,16 @@
     <title>Sleety's Attic - SYSTEM_BIO</title>
 </head>
 <body>
+    <div class="waveform-box">
+        <canvas id="magiWaveform" width="200"></canvas>
+    </div>
     <div class="monitor-frame">
-        <!-- Top System Bar -->
         <div class="magi-header">
             <div class="status-box alert-bg">PRIORITY: AAA</div>
             <div class="title-box">SLEETY'S ATTIC - SUBJECT_DATA</div>
             <div class="code-box">EXT_VER: 21.0</div>
         </div>
 
-        <!-- Warning Strip -->
         <div class="warning-strip">
             <span class="separator">||</span>
             <span class="warning-text">CAUTION: PERSONNEL_FILE_OPEN</span>
@@ -23,7 +24,6 @@
         </div>
 
         <div class="main-wrapper">
-            <!-- Sidebar (Melchior & Balthasar) -->
             <aside class="magi-sidebar">
                 <fieldset class="core-box melchior">
                     <legend>MELCHIOR-1</legend>
@@ -40,7 +40,15 @@
                         </ul>
                     </nav>
                 </fieldset>
-
+                <fieldset class="core-box caspar" id="lastfm-widget">
+                    <legend>AUDIO_FEED</legend>
+                    <div class="lastfm-inner">
+                        <div id="lastfm-topartist" class="accent-blue">Top Artist: </div>
+                        <div id="lastfm-status" class="timestamp">[FETCHING]</div>
+                        <div id="lastfm-title" class="glow-text">LOADING_TRACK...</div>
+                        <div id="lastfm-artist" class="accent-blue">---</div>
+                    </div>
+                </fieldset>
                 <fieldset class="core-box balthasar">
                     <legend>BALTHASAR-2</legend>
                     <ul class="link-grid">
@@ -117,12 +125,229 @@
     </div>
 
     <script>
-        // Random PFP Logic
-        const pfpImages = ["../Images/Misc/rei-I-removebg-preview.png", "../Images/Misc/asuka-removebg-preview.png"];
-        const pfpElement = document.getElementById('magi-pfp');
-        if (Math.random() > 0.7) {
-            pfpElement.src = pfpImages[Math.floor(Math.random() * pfpImages.length)];
+        const LASTFM_API_KEY = "3408bda73a225ba04481208bbacbc914";
+        const LASTFM_USER = "SleetyDEV";
+
+        async function fetchLastFmTrack() {
+            const recentUrl = `https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${LASTFM_USER}&api_key=${LASTFM_API_KEY}&format=json&limit=1`;
+            const topArtistUrl = `https://ws.audioscrobbler.com/2.0/?method=user.gettopartists&user=${LASTFM_USER}&api_key=${LASTFM_API_KEY}&format=json&limit=1`;
+
+            try {
+                const [recentRes, topArtistRes] = await Promise.all([
+                    fetch(recentUrl),
+                    fetch(topArtistUrl)
+                ]);
+
+                const recentData = await recentRes.json();
+                const topArtistData = await topArtistRes.json();
+
+                const track = recentData.recenttracks.track[0];
+                const topArtist = topArtistData.topartists.artist[0].name.toUpperCase();
+                
+                const trackName = track.name.toUpperCase();
+                const artistName = track.artist['#text'].toUpperCase();
+
+                const isNowPlaying = track['@attr'] && track['@attr'].nowplaying === 'true';
+
+                const statusElement = document.getElementById('lastfm-status');
+                const titleElement = document.getElementById('lastfm-title');
+                const artistElement = document.getElementById('lastfm-artist');
+
+                if (isNowPlaying) {
+                    statusElement.innerText = "[NOW_PLAYING]";
+                    statusElement.style.color = "var(--magi-green)";
+                } else {
+                    statusElement.innerText = "[LAST_PLAYED]";
+                    statusElement.style.color = "#666";
+                }
+
+                titleElement.innerText = trackName;
+                artistElement.innerText = artistName;
+
+                const topArtistElement = document.getElementById('lastfm-topartist');
+                if (topArtistElement) {
+                    topArtistElement.innerText = `TOP: ${topArtist}`;
+                }
+
+            } catch (error) {
+                document.getElementById('lastfm-status').innerText = "[SYNC_ERROR]";
+                document.getElementById('lastfm-title').innerText = "SIGNAL_LOST";
+            }
         }
+
+        fetchLastFmTrack();
+        setInterval(fetchLastFmTrack, 15000);
+        async function loadRecentMagiLogs() {
+            const listElement = document.querySelector('.blog-list')
+            try {
+                const response = await fetch('./blogs.json');
+                const logs = await response.json();
+                
+                const recent = logs.slice(0, 5); 
+                
+                listElement.innerHTML = recent.map(log => `
+                    <li>
+                        <span class="timestamp">[${log.date}]</span> 
+                        <a href="./blogdisplay.html?id=${log.id}" class="blog-link">${log.title}.TXT</a>
+                    </li>
+                `).join('');
+            } catch (e) {
+                listElement.innerHTML = "<li>SYNC_ERROR</li>";
+            }
+        }
+        loadRecentMagiLogs();
+
+        const pfpImages = [
+            "./Images/Misc/rei-I-removebg-preview.png",
+            "./Images/Misc/asuka-removebg-preview.png"
+        ];
+        const pfpElement = document.getElementById('magi-pfp');
+        const chance = Math.random();
+
+        if (chance < 0.7) { 
+            pfpElement.src = "./Images/Misc/pfp.png";
+        } else {
+            const randomIndex = Math.floor(Math.random() * pfpImages.length);
+            pfpElement.src = pfpImages[randomIndex];
+        }
+
+        if (!sessionStorage.getItem('magi_booted')) {
+            sessionStorage.setItem('magi_booted', 'true');
+            window.location.href = "intro.html";
+        }
+
+        let posX = 0;
+        let posY = 0;
+        let vx = 0.5;
+        let vy = 0.5;
+        let targetVx = 0.5;
+        let targetVy = 0.5;
+
+        function pickRandomVelocity() {
+            const speed = 2 + Math.random() * 1.0;
+            const angle = Math.random() * Math.PI * 2;
+
+            targetVx = Math.cos(angle) * speed;
+            targetVy = Math.sin(angle) * speed;
+
+            const nextChangeTime = 4000 + Math.random() * 8000;
+            setTimeout(pickRandomVelocity, nextChangeTime);
+        }
+
+        function animateBg() {
+            vx += (targetVx - vx) * 0.025;
+            vy += (targetVy - vy) * 0.025;
+
+            posX += vx;
+            posY += vy;
+
+            posX %= 20;
+            posY %= 20;
+
+            document.body.style.setProperty('--bg-x', `${posX}px`);
+            document.body.style.setProperty('--bg-y', `${posY}px`);
+
+            requestAnimationFrame(animateBg);
+        }
+
+        pickRandomVelocity();
+        requestAnimationFrame(animateBg);
+
+        const canvas = document.getElementById('magiWaveform');
+        const ctx = canvas.getContext('2d');
+
+        const numPoints = 150;
+        const points = new Array(numPoints).fill(0);
+
+        let wavePos = 0;
+        let waveVel = 0;
+        let waveAcc = 0;
+        let isGlitching = false;
+        let isBursting = false;
+        let burstIntensity = 0;
+
+        function updateWaveformPhysics() {
+            if (!isGlitching && Math.random() < 0.008) {
+                isGlitching = true;
+                setTimeout(() => {
+                    isGlitching = false;
+                }, 2000 + Math.random() * 3600);
+            }
+
+            if (!isBursting && Math.random() < 0.005) {
+                isBursting = true;
+                setTimeout(() => {
+                    isBursting = false;
+                }, 8000 + Math.random() * 16000);
+            }
+
+            const targetIntensity = isBursting ? 1 : 0;
+            const blendRate = isBursting ? 0.05 : 0.015;
+            burstIntensity += (targetIntensity - burstIntensity) * blendRate;
+
+            if (isGlitching) {
+                if (Math.random() < 0.15) {
+                    wavePos = (Math.random() > 0.5 ? 1 : -1) * (20 + Math.random() * 35);
+                    waveVel = (Math.random() - 0.5) * 20;
+                }
+
+                const violentForce = (Math.random() - 0.5) * (8.0 + burstIntensity * 4.0);
+                const extremeJitter = (Math.random() - 0.5) * (12.0 + burstIntensity * 6.0);
+
+                waveVel += violentForce;
+                waveVel *= 0.70;
+                wavePos += waveVel + extremeJitter;
+            } else {
+                const forcePower = 0.4 + burstIntensity * 4.5;
+                const jitterPower = 0.4 + burstIntensity * 6.0;
+                const damping = 0.90 - burstIntensity * 0.15;
+
+                const randomForce = (Math.random() - 0.5) * forcePower;
+                const springForce = -wavePos * (0.04 - burstIntensity * 0.015);
+
+                waveAcc = randomForce + springForce;
+                waveVel += waveAcc;
+                waveVel *= damping;
+
+                const jitter = (Math.random() - 0.5) * jitterPower;
+                wavePos += waveVel + jitter;
+            }
+
+            points.pop();
+            points.unshift(wavePos);
+        }
+        function drawWaveform() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const centerX = canvas.width / 2;
+            const stepY = canvas.height / (numPoints - 1);
+
+            const strokeColor = '#3cffd0'; 
+            ctx.strokeStyle = strokeColor;
+            ctx.lineWidth = 2;
+            ctx.shadowColor = strokeColor;
+
+            ctx.beginPath();
+            for (let i = 0; i < numPoints; i++) {
+                const x = centerX + points[i];
+                const y = i * stepY;
+
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+            ctx.stroke();
+        }
+
+        function animateWaveform() {
+            updateWaveformPhysics();
+            drawWaveform();
+            requestAnimationFrame(animateWaveform);
+        }
+
+        requestAnimationFrame(animateWaveform);
     </script>
 </body>
 </html>
