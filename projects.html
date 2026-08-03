@@ -75,12 +75,12 @@
 
                     <fieldset class="sub-log">
                         <legend>WORKING_ON</legend>
-                        <ul class="blog-list" style="list-style: none;">
+                        <ul  style="list-style: none;">
                             <li><span class="accent-blue">[CORE]</span> Website: <span class="accent-yellow">80%</span></li>
                             <li><span class="data-text"> [▓▓▓▓▓▓▓▓░░]</span></li>
                             
-                            <li style="margin-top: 10px;"><span class="accent-blue">[GAME]</span> Dungeon Madness: <span class="accent-yellow">40%</span></li>
-                            <li><span class="data-text"> [▓▓▓▓░░░░░░]</span></li>
+                            <li style="margin-top: 10px;"><span class="accent-blue">[GAME]</span> Motnromentium: <span class="accent-yellow">~50%</span></li>
+                            <li><span class="data-text"> [▓▓▓▓▓░░░░░]</span></li>
                             
                             <li style="margin-top: 10px;"><span class="accent-blue">[E.E.]</span> ESP32 Music Player: <span class="accent-yellow">90%</span></li>
                             <li><span class="data-text"> [▓▓▓▓▓▓▓▓▓░]</span></li>
@@ -89,8 +89,12 @@
 
                     <fieldset class="sub-log" style="margin-top: 20px;">
                         <legend>ARCHIVED_COMPLETED</legend>
-                        <ul class="blog-list">
-                            <li><span class="timestamp">[SYSTEM]</span> <span class="data-text">NO_DATA_FOUND (NaN)</span></li>
+                        <ul >
+                            <!--<li><span class="timestamp">[SYSTEM]</span> <span class="data-text">NO_DATA_FOUND (NaN)</span></li>-->
+                            <li><a href="https://weezdle.sleetydev.com" class="accent-blue" >Weezdle</a><br><span>-A Weezer themed wordle/heardle clone i've made outta boredom.</span></li>
+                            <br>
+                            <li><a href="https://rei-point.sleetydev.com" class="accent-blue" >Rei Internet Checkpoint</a><br><span>-It's a site where you can drop a rei into the endlessness and you can leave a message with her too!</span></li>
+                            
                         </ul>
                     </fieldset>
 
@@ -152,7 +156,6 @@
                 titleElement.innerText = trackName;
                 artistElement.innerText = artistName;
 
-                // If you have a top artist element in your HTML:
                 const topArtistElement = document.getElementById('lastfm-topartist');
                 if (topArtistElement) {
                     topArtistElement.innerText = `TOP: ${topArtist}`;
@@ -311,7 +314,7 @@
             const centerX = canvas.width / 2;
             const stepY = canvas.height / (numPoints - 1);
 
-            const strokeColor = '#3cffd0'; 
+             const strokeColor = '#50ff10'; 
             ctx.strokeStyle = strokeColor;
             ctx.lineWidth = 2;
             ctx.shadowColor = strokeColor;
